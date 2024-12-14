@@ -1,0 +1,27 @@
+version: "3.9"  # Specify the Docker Compose file format version
+
+services:
+  mariadb:
+    image: mariadb:latest  # Use the official MariaDB image
+    container_name: mariadb_container  # Optional: name for the container
+    restart: always  # Automatically restart the container if it stops
+    hostname: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Set the root password
+      MYSQL_DATABASE: exampledb          # Optional: create a database at startup
+      MYSQL_USER: user                   # Optional: create a user at startup
+      MYSQL_PASSWORD: userpassword       # Optional: set the user's password
+    ports:
+      - "3306:3306"  # Expose MariaDB on port 3306
+    volumes:
+      - mariadb_data:/var/lib/mysql  # Persist data across container restarts
+      - mariadb_config:/etc/mysql/conf.d  # Optional: custom configuration files
+    networks:
+      - mariadb_network
+
+volumes:
+  mariadb_data:  # Define a volume for data persistence
+  mariadb_config:  # Optional: for custom configuration
+
+networks:
+  mariadb_network:  # Define a custom network
